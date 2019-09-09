@@ -1,5 +1,5 @@
+pyTelegramBotAPI
 discord.py
 aiohttp
 websockets
 chardet
-pyTelegramBotAPI==3.6.6
