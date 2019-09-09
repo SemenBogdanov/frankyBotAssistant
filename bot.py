@@ -1,22 +1,15 @@
 import telebot
 import os
 
-token=os.environ.get("Bot-token")
+token=os.environ.get('Bottoken')
 bot = telebot.TeleBot(str(token))
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-	bot.reply_to(message, "Howdy, how are you doing?")
+	bot.reply_to(message, "Привет! Стартанули!")
 
-#@bot.message_handler(func=lambda message: True)
-#def echo_all(message):
-#	bot.reply_to(message, message.text)
-
-@bot.message_handler(func=lambda a:True)
+@bot.message_handler(context_type=[text])
 def function_name(message):
-	task=bot.get_me().id
-	bot.send_message(task,"Наконец-то простое сообщение!")
-	bot.reply_to(message, task)
-
-
+	bot.send_message(message.chat.id,"Наконец-то простое сообщение!")
+	
 bot.polling()
