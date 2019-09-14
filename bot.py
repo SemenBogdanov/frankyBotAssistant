@@ -1,5 +1,6 @@
 import os
 import telebot
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 global functions, coffee
 functions = ("функции","функция", "функций","функц")
