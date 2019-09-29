@@ -35,6 +35,7 @@ def programming_voc(call):
 
 def get_coffee_place(call):
 	bot.answer_callback_query(call.id, "Посоветовать кофейню!")
+	'''не работает
 	file=open('descCoffee.txt')
 	cid=call.message.chat.id
 	t=file.read()
@@ -43,6 +44,7 @@ def get_coffee_place(call):
 	file.close()
 	#return t
 	pass
+	'''
 
 def welcome_func():
 	markup=InlineKeyboardMarkup()
