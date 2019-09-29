@@ -1,7 +1,7 @@
 from zeep import Client
 from zeep import xsd
 from zeep.settings import Settings
-
+import os
 
 
 def getRpoInfo(Barcode):		
@@ -11,9 +11,9 @@ def getRpoInfo(Barcode):
 
 	barcode=str(Barcode)
 	print("Вы ввели: " + barcode)
-
-	my_login = 'WZEZAUZbZZZpeK' # логин
-	my_password = 'Rpyh80CTsbrH' #пароль
+	
+	my_login = os.environ.get('RPO_LOGIN') # логин
+	my_password = os.environ.get('RPO_PASS') #пароль
 
 	#pprint(my_login + ' ' + my_password)
 
