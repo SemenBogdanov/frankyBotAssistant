@@ -1,7 +1,7 @@
 import os
 import psycopg2
 
-DATABASE_URL = 'postgres://ojvgsnmthwqndk:8bb9342a9aab831772134aa786eb8ee1dcd931cb5e80fd4884519c8d553c07c1@ec2-46-137-187-23.eu-west-1.compute.amazonaws.com:5432/dd4ctr1dopnkc7'
+DATABASE_URL = 'DATABASE_URL'
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
