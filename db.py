@@ -5,6 +5,7 @@ DATABASE_URL = 'DATABASE_URL'
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
+#select
 sql = 'SELECT * FROM memo'
  
 try:
