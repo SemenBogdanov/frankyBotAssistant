@@ -10,25 +10,25 @@ functions = ("функции","функция", "функций","функц")
 token=os.environ.get('BOT_TOKEN')
 bot = telebot.TeleBot(str(token))
 
-greetings='''Привет! Спроси о функциях!'''
-
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
 	#Проверка пользователя на знакомство
-	res=checkuser(message.chat.id)
-	if res=0:
-		UserName=bot.send_message(message.chat.id, "Привет, давай знакомиться! Как тебя зовут?")
-		bot.register_next_step_handler(message, UserName, addUserToDb)
-	
-	bot.reply_to(message, greetings)
-
-def addUserToDb(message, UserName):
-	res=addUser(message, UserName)
-	if res:
-		bot.send_message(message.chat.id, "Теперь мы знакомы")
+	res=db.checkUser(message.chat.id)
+	if len(res)<= 0:
+		answer=bot.send_message(message.chat.id, "Привет, давай знакомиться! Как тебя зовут?")
+		bot.register_next_step_handler(answer, addUserToDb)
 	else:
-		bot.send_message(message.chat.id, "Неудачная попытка тебя запомнить, нажми /start еще раз!")
-		
+		print(len(res))
+		bot.send_message(message.chat.id, 'Привет, мой друг '+res[0][0]+'!!!')
+
+def addUserToDb(answer):
+	res=db.addUser(answer)
+	if res:
+		bot.send_message(answer.chat.id, "Теперь мы знакомы")
+	else:
+		bot.send_message(answer.chat.id, "Неудачная попытка тебя запомнить, нажми /start еще раз!")
+		send_welcome(answer)
+
 def get_Rpo(call):
 	msg=bot.send_message(call.message.chat.id, "Введите номер отправления:")
 	bot.register_next_step_handler(msg, get_Rpo2)
