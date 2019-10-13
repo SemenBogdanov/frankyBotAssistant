@@ -13,15 +13,12 @@ def checkUser(chatId):
 	    cur.execute(sql)
 	    data = cur.fetchall()
 	    return data
-	    
 	except psycopg2.Error as err:
 	    print("Query error: {}".format(err))
 
 def addUser(ans):
 	print(ans.chat.id)
-	sql="insert into usersbot (username, messagechatid, tlgusername) \
-	values ('" + ans.text + "','" + str(ans.chat.id) + "','" + str(ans.chat.username) + "')"
-	print(sql)
+	sql="insert into usersbot (username, messagechatid, tlgusername) values ('" + ans.text + "','" + str(ans.chat.id) + "','" + str(ans.chat.username) + "')"
 	try:
 	    cur = conn.cursor()
 	    # cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) # by column name
