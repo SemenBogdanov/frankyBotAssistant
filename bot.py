@@ -19,10 +19,18 @@ def send_welcome(message):
 		answer=bot.send_message(message.chat.id, "Привет, давай знакомиться! Как тебя зовут?")
 		bot.register_next_step_handler(answer, addUserToDb)
 	else:
-		print(len(res))
-		bot.send_message(message.chat.id, 'Привет, мой друг '+res[0][0]+'!!!')
+		bot.send_message(message.chat.id, 'Привет, мой друг '+res[0][0]+'!')
+		bot.send_message(message.chat.id, "Вот что я могу!", reply_markup=welcome_func())
+
 def rates(call):
-        r=ExchangeRates('2019-10-26')
+	dt=datetime.datetime.now().strftime("%Y-%m-%d")
+	r=ExchangeRates(dt, locale_en=True)
+	try:
+		#print(r)
+		answer="По состоянию на " + dt + ", 1 USD = " + str(r['USD'].value) + " руб."
+		bot.send_message(call.message.chat.id, answer)
+	except a as Exception:
+		print (a)
 
 def addUserToDb(answer):
 	res=db.addUser(answer)
@@ -89,15 +97,7 @@ def callback_query(call):
 
 @bot.message_handler(content_types=['text'])
 def function_name(message):
-	for i in range(len(functions)):
-		if functions[i] in message.text:
-			bot.send_message(message.chat.id, 
-				"Вот что я могу!", reply_markup=welcome_func())
-			return;
-		else :
-			continue	
-	i+=1
-	bot.send_message(message.chat.id, "Попробуй спросить меня о функциях!")
+	bot.send_message(message.chat.id, "Вот что я могу!", reply_markup=welcome_func())
 
 print("бот запущен!")
 
