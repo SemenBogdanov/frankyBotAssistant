@@ -2,6 +2,7 @@ import os
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from rpoInfo import getRpoInfo
+import db
 
 global functions, coffee
 functions = ("функции","функция", "функций","функц")
@@ -13,8 +14,21 @@ greetings='''Привет! Спроси о функциях!'''
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
+	#Проверка пользователя на знакомство
+	res=checkuser(message.chat.id)
+	if res=0:
+		UserName=bot.send_message(message.chat.id, "Привет, давай знакомиться! Как тебя зовут?")
+		bot.register_next_step_handler(message, UserName, addUserToDb)
+	
 	bot.reply_to(message, greetings)
 
+def addUserToDb(message, UserName):
+	res=addUser(message, UserName)
+	if res:
+		bot.send_message(message.chat.id, "Теперь мы знакомы")
+	else:
+		bot.send_message(message.chat.id, "Неудачная попытка тебя запомнить, нажми /start еще раз!")
+		
 def get_Rpo(call):
 	msg=bot.send_message(call.message.chat.id, "Введите номер отправления:")
 	bot.register_next_step_handler(msg, get_Rpo2)
