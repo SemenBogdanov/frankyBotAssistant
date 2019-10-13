@@ -3,6 +3,7 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from rpoInfo import getRpoInfo
 import db
+from pycbrf import ExchangeRates, Banks
 
 global functions, coffee
 functions = ("функции","функция", "функций","функц")
@@ -20,6 +21,8 @@ def send_welcome(message):
 	else:
 		print(len(res))
 		bot.send_message(message.chat.id, 'Привет, мой друг '+res[0][0]+'!!!')
+def rates(call):
+        r=ExchangeRates('2019-10-26')
 
 def addUserToDb(answer):
 	res=db.addUser(answer)
@@ -78,7 +81,7 @@ def callback_query(call):
     elif call.data == "get_coffee_place":
         get_coffee_place(call)
     elif call.data == "course_exchange":
-        bot.answer_callback_query(call.id, "выбран курс валют")
+        rates(call)
     elif call.data == "programming_voc":
         programming_voc(call)
     elif call.data == "get_Rpo":
