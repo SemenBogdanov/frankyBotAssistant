@@ -1,6 +1,6 @@
 from pycbrf import ExchangeRates, Banks
 
-
+'''
 rates = ExchangeRates('2019-10-13', locale_en=True)
 
 rates.date_requested  # 2016-06-26 00:00:00
@@ -24,7 +24,7 @@ rates['USD']
         par=Decimal('1'),
         rate=Decimal('65.5287'))
 '''
-
+'''
 banks = Banks()
 bank = banks['045004641']
 bank.swift  # SABRRUMMNH1
@@ -33,3 +33,4 @@ bank.corr  # 30101810500000000641
 bank_annotated = Banks.annotate([bank])[0]
 for title, value in bank_annotated.items():
     print('%s: %s' % (title, value))
+'''
