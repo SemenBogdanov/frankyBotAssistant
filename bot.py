@@ -30,7 +30,7 @@ def rates(call):
 		answer="По состоянию на " + dt + ", 1 USD = " + str(r['USD'].value) + " руб."
 		bot.send_message(call.message.chat.id, answer)
 	except a as Exception:
-		print (a)
+		bot.send_message(call.message.chat.id, a)
 
 def addUserToDb(answer):
 	res=db.addUser(answer)
@@ -101,4 +101,4 @@ def function_name(message):
 
 print("бот запущен!")
 
-bot.polling()
+bot.polling() 
