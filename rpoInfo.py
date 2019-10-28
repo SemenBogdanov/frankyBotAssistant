@@ -28,11 +28,16 @@ def getRpoInfo(Barcode):
 		
 	return myans
 
-def get_Rpo(call):
+def get_Rpo(call, bot):
 	msg=bot.send_message(call.message.chat.id, "Введите номер отправления:")
+	bot.send_message(call.message.chat.id, bot)
 	bot.register_next_step_handler(msg, get_Rpo2)
 
 def get_Rpo2(msg):
-	answer=getRpoInfo(msg.text)
-	bot.send_message(msg.chat.id, answer)
+	try:
+	    answer=getRpoInfo(msg.text)
+	    return answer
+	except Exception as e:
+	    return ("Такого отправления в системе Почты России нет!")
+	#bot.send_message(msg.chat.id, answer)
 	
