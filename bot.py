@@ -93,7 +93,12 @@ def callback_query(call):
     elif call.data == "programming_voc":
         programming_voc(call)
     elif call.data == "get_Rpo":
-    	rpoInfo.get_Rpo(call)     
+	try:
+		bot.send_message(call.message.chat.id,"Попытка вызвать функцию отслеживания!")
+    		rpoInfo.get_Rpo(call)
+	except Exception as e:
+		bot.send_message(call.message.chat.id,"Неуспешная попытка" + str(e))
+		
 
 @bot.message_handler(content_types=['text'])
 def function_name(message):
