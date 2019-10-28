@@ -1,7 +1,7 @@
 import os
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-from rpoInfo import getRpoInfo
+import rpoInfo
 import db
 from pycbrf import ExchangeRates, Banks
 
@@ -93,7 +93,7 @@ def callback_query(call):
     elif call.data == "programming_voc":
         programming_voc(call)
     elif call.data == "get_Rpo":
-    	get_Rpo(call)     
+    	rpoInfo.get_Rpo(call)     
 
 @bot.message_handler(content_types=['text'])
 def function_name(message):
