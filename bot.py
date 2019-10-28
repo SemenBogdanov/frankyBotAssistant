@@ -85,7 +85,7 @@ def welcome_func():
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     if call.data == "get_weather":
-    	bot.answer_callback_query(call.id, "Выбрана погода")
+        bot.answer_callback_query(call.id, "Выбрана погода")
     elif call.data == "get_coffee_place":
         get_coffee_place(call)
     elif call.data == "course_exchange":
@@ -93,11 +93,11 @@ def callback_query(call):
     elif call.data == "programming_voc":
         programming_voc(call)
     elif call.data == "get_Rpo":
-	try:
-		bot.send_message(call.message.chat.id,"Попытка вызвать функцию отслеживания!")
-    		rpoInfo.get_Rpo(call)
-	except Exception as e:
-		bot.send_message(call.message.chat.id,"Неуспешная попытка" + str(e))
+        try:
+            bot.send_message(call.message.chat.id,"Попытка вызвать функцию отслеживания!")
+                rpoInfo.get_Rpo(call)
+        except Exception as e:
+                bot.send_message(call.message.chat.id,"Неуспешная попытка" + str(e))
 		
 
 @bot.message_handler(content_types=['text'])
