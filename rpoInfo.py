@@ -37,11 +37,11 @@ def get_Rpo2(msg):
 	bot.send_message(msg.chat.id, 'Получен номер ' + str(msg.text))
 	bot.send_message(msg.chat.id, 'Спрашиваю у почты...')
 	try:
-	    answer=getRpoInfo(msg.text)
-	    bot.send_message(msg.chat.id, 'Вот что удалось найти:')
-	    bot.send_message(msg.chat.id, answer)
-	    return answer
+		answer=getRpoInfo(msg.text)
+		bot.send_message(msg.chat.id, 'Вот что удалось найти:')
+		bot.send_message(msg.chat.id, answer)
+		return answer
 	except Exception as e:
-	    return ("Такого отправления в системе Почты России нет!")
+		return ("Такого отправления в системе Почты России нет!")
 	#bot.send_message(msg.chat.id, answer)
 	
