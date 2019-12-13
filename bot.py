@@ -71,7 +71,9 @@ def welcome_func():
 		callback_data="get_coffee_place"))
 	markup.add(InlineKeyboardButton("Погода", callback_data="get_weather"),
 			InlineKeyboardButton("Курс валют", callback_data="course_exchange"))
-	markup.add(InlineKeyboardButton("Запрограммировать словарь", callback_data="programming_voc"))
+	markup.add(InlineKeyboardButton("Добавить день рождение", callback_data="programming_voc"))
+	markup.add(InlineKeyboardButton("Дни рождения сегодня", callback_data=""))
+	markup.add(InlineKeyboardButton("Дни рождения в ближайший месяц", callback_data="programming_voc"))
 	markup.add(InlineKeyboardButton("Отслеживание ПочтаРоссии", callback_data="get_Rpo"))
 	return markup
 
