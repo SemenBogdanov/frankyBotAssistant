@@ -30,12 +30,16 @@ def getRpoInfo(Barcode):
 
 def get_Rpo(call, bot):
 	msg=bot.send_message(call.message.chat.id, "Введите номер отправления:")
-	bot.send_message(call.message.chat.id, bot)
-	bot.register_next_step_handler(msg, get_Rpo2)
+	#bot.send_message(call.message.chat.id, bot)
+	bot.register_next_step_handler(msg, lambda m: get_Rpo2(m, bot))
 
 def get_Rpo2(msg):
+	bot.send_message(msg.chat.id, 'Получен номер ' + str(msg.text))
+	bot.send_message(msg.chat.id, 'Спрашиваю у почты...')
 	try:
 	    answer=getRpoInfo(msg.text)
+	    bot.send_message(msg.chat.id, 'Вот что удалось найти:')
+	    bot.send_message(msg.chat.id, answer)
 	    return answer
 	except Exception as e:
 	    return ("Такого отправления в системе Почты России нет!")
