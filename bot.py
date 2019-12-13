@@ -28,7 +28,7 @@ def rates(call):
 	r=ExchangeRates(dt, locale_en=True)
 	try:
 		#print(r)
-		answer="По состоянию на " + dt + ", 1 USD = " + str(r['USD'].value) + " руб."
+		answer="По состоянию на " + dt + ", 1 USD = " + str(r['USD'].value) + " руб. \nПо состоянию на " + dt + ", 1 EUR = " + str(r['EUR'].value) + " руб.""
 		bot.send_message(call.message.chat.id, answer)
 	except a as Exception:
 		bot.send_message(call.message.chat.id, a)
