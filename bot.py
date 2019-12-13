@@ -4,6 +4,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import rpoInfo
 import db
 from pycbrf import ExchangeRates, Banks
+import datetime
 
 global functions, coffee
 functions = ("функции","функция", "функций","функц")
@@ -39,14 +40,6 @@ def addUserToDb(answer):
 	else:
 		bot.send_message(answer.chat.id, "Неудачная попытка тебя запомнить, нажми /start еще раз!")
 		send_welcome(answer)
-
-def get_Rpo(call):
-	msg=bot.send_message(call.message.chat.id, "Введите номер отправления:")
-	bot.register_next_step_handler(msg, get_Rpo2)
-
-def get_Rpo2(msg):
-	answer=getRpoInfo(msg.text)
-	bot.send_message(msg.chat.id, answer)
 
 def recVoc(msg):
 	#file=open('vocablulary.txt', a)
