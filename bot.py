@@ -5,6 +5,9 @@ import rpoInfo
 import db
 from pycbrf import ExchangeRates, Banks
 import datetime
+import requests
+import json
+import time
 
 global functions, coffee
 functions = ("функции", "функция", "функций", "функц")
@@ -31,7 +34,7 @@ def rates(call):
     try:
         # print(r)
         answer = "По состоянию на " + dt + ", 1 USD = " + \
-                 str(r['USD'].value) + " руб. /n По состоянию на " + dt + \
+                 str(r['USD'].value) + " руб. \n По состоянию на " + dt + \
                  ", 1 EUR = " + str(r['EUR'].value) + " руб."
         bot.send_message(call.message.chat.id, answer)
     except a as Exception:
@@ -58,7 +61,47 @@ def programming_voc(call):
     bot.register_next_step_handler(msg, recVoc)
 
 
-#
+def getyandexweather(call):
+    #url = 'https://api.weather.yandex.ru/v1/informers'
+    url = 'https://api.weather.yandex.ru/v1/forecast/'
+    h = {"X-Yandex-API-Key": "ac436911-a645-4887-928e-f2c201db9c0e"}
+    p = {"lat": "47.222078", "lon": "39.720349"}
+    weather_json = requests.get(url, params=p, headers=h)
+    weather = json.loads(weather_json.text)
+    cur_now = time.ctime(weather['now'])
+    cdt = time.strptime(cur_now, "%a %b %d %H:%M:%S %Y")
+    td = str(cdt.tm_mday) + '.' + str(cdt.tm_mon) + '.' + str(cdt.tm_year)
+    season_d = {"winter": "Зима", "summer": "Лето"}
+    cond={"clear":"ясно",
+          "partly-cloudy": "малооблачно",
+          "cloudy": "облачно с прояснениями",
+          "overcast": "пасмурно",
+          "partly-cloudy-and-light-rain": "небольшой дождь",
+          "partly-cloudy-and-rain": "дождь",
+          "overcast-and-rain": "сильный дождь",
+          "overcast-thunderstorms-with-rain": "сильный дождь и гроза",
+          "cloudy-and-light-rain": "небольшой дождь",
+          "overcast-and-light-rain": "небольшой дождь",
+          "cloudy-and-rain": "дождь",
+          "overcast-and-wet-snow": "дождь со снегом",
+          "partly-cloudy-and-light-snow": "небольшой снег",
+          "partly-cloudy-and-snow": "снег",
+          "overcast-and-snow": "снегопад",
+          "cloudy-and-light-snow": "небольшой снег",
+          "overcast-and-light-snow": "небольшой снег",
+          "cloudy-and-snow": "Облачно и снег"}
+    answerWeatherAbout = "Сегодня на " + td + ", по данным Яндекс.Погода в Ростове-на-Дону: \n" \
+                        "Температура воздуха: " + str(weather['fact']['temp']) + " градусов и ощущается как " \
+                        + str(weather['fact']['feels_like']) + ", давление " \
+                        + str(weather['fact']['pressure_mm']) + " мм.рт.ст., влажность " \
+                        + str(weather['fact']['humidity']) + "%. " \
+                        + "Ветер " + str(weather['fact']['wind_dir']) + ", скорость " \
+                        + str(weather['fact']['wind_speed']) + "м/с, с порывами до " \
+                        + str(weather['fact']['wind_gust']) + "м/с. Условия: " \
+                        + cond[str(weather['fact']['condition'])] + ". Сейчас " + season_d[str(weather['fact']['season'])] \
+                        + "."
+
+    print(answerWeatherAbout)
 
 def get_coffee_place(call):
     bot.answer_callback_query(call.id, "Посоветовать кофейню!")
@@ -81,6 +124,7 @@ def welcome_func():
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     if call.data == "get_weather":
+        getyandexweather(call)
         bot.answer_callback_query(call.id, "Выбрана погода")
     elif call.data == "get_coffee_place":
         get_coffee_place(call)
