@@ -14,6 +14,7 @@ functions = ("функции", "функция", "функций", "функц")
 
 token = os.environ.get('BOT_TOKEN')
 bot = telebot.TeleBot(str(token))
+ya_id = os.environ.get('Yandex_API_KEY')
 
 
 @bot.message_handler(commands=['start', 'help'])
@@ -64,7 +65,7 @@ def programming_voc(call):
 def getyandexweather(call):
     #url = 'https://api.weather.yandex.ru/v1/informers'
     url = 'https://api.weather.yandex.ru/v1/forecast/'
-    h = {"X-Yandex-API-Key": "ac436911-a645-4887-928e-f2c201db9c0e"}
+    h = {"X-Yandex-API-Key": ya_id}
     p = {"lat": "47.222078", "lon": "39.720349"}
     weather_json = requests.get(url, params=p, headers=h)
     weather = json.loads(weather_json.text)
