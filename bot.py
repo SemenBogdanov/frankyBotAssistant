@@ -100,8 +100,7 @@ def getyandexweather(call):
                         + str(weather['fact']['wind_gust']) + "м/с. Условия: " \
                         + cond[str(weather['fact']['condition'])] + ". Сейчас " + season_d[str(weather['fact']['season'])] \
                         + "."
-
-    print(answerWeatherAbout)
+    bot.send_message(call.message.chat.id, answerWeatherAbout)
 
 def get_coffee_place(call):
     bot.answer_callback_query(call.id, "Посоветовать кофейню!")
