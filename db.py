@@ -10,11 +10,11 @@ def checkUser(chatId):
 	try:
 		cur = conn.cursor()
 		# cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) # by column name
-	    cur.execute(sql)
+		cur.execute(sql)
 		data = cur.fetchall()
 		return data
-	except psycopg2.Error as err:
-		print("Query error: {}".format(err))
+	except psycopg2.Error as err1:
+		print("Query error: {}".format(err1))
 
 def addUser(ans):
 	print(ans.chat.id)
@@ -22,10 +22,8 @@ def addUser(ans):
 	try:
 		cur = conn.cursor()
 		# cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) # by column name
-	    cur.execute(sql)
+		cur.execute(sql)
 		conn.commit()
 		return True
-	except psycopg2.Error as err:
-		print("Query error: {}".format(err))
-		
-
+	except psycopg2.Error as err1:
+		print("Query error: {}".format(err1))

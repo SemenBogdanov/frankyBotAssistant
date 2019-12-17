@@ -10,7 +10,6 @@ import json
 import time
 
 global functions, coffee
-functions = ("функции", "функция", "функций", "функц")
 
 token = os.environ.get('BOT_TOKEN')
 bot = telebot.TeleBot(str(token))
@@ -38,7 +37,7 @@ def rates(call):
                  str(r['USD'].value) + " руб. \n По состоянию на " + dt + \
                  ", 1 EUR = " + str(r['EUR'].value) + " руб."
         bot.send_message(call.message.chat.id, answer)
-    except a as Exception:
+    except Exception as a:
         bot.send_message(call.message.chat.id, a)
 
 
