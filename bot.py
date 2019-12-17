@@ -73,7 +73,7 @@ def getyandexweather(call):
     cdt = time.strptime(cur_now, "%a %b %d %H:%M:%S %Y")
     td = str(cdt.tm_mday) + '.' + str(cdt.tm_mon) + '.' + str(cdt.tm_year)
     season_d = {"winter": "Зима", "summer": "Лето"}
-    cond={"clear":"ясно",
+    cond ={"clear":"ясно",
           "partly-cloudy": "малооблачно",
           "cloudy": "облачно с прояснениями",
           "overcast": "пасмурно",
