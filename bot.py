@@ -33,9 +33,13 @@ def rates(call):
     r = ExchangeRates(dt, locale_en=True)
     try:
         # print(r)
-        answer = "По состоянию на " + dt + ": \n 1 USD = " + \
-                 str(r['USD'].value) + " руб. \n " \
-                 + "1 EUR = " + str(r['EUR'].value) + " руб."
+        answer = "По состоянию на " + dt + ": \n " \
+                "1 USD (Доллар) = " + str(r['USD'].value) + " руб. \n " \
+                 + "1 EUR (Евро) = " + str(r['EUR'].value) + " руб. \n " \
+                 + "1 GBP (Фунт стерлингов Соединенного Королевства = " + str(r['GBP'].value) + " руб. \n " \
+                 + "1 CHF (Швейцарский франк) = " + str(r['CHF'].value) + " руб. \n " \
+                 + "1 JPY (Японская иена) = " + str(r['JPY'].value) + " руб. \n " \
+                 + "1 DKK (Датская крона) = " + str(r['DKK'].value) + " руб. \n "
         bot.send_message(call.message.chat.id, answer)
     except Exception as a:
         bot.send_message(call.message.chat.id, a)
