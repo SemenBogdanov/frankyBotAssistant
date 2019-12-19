@@ -36,10 +36,23 @@ def rates(call):
         answer = "По состоянию на " + dt + ": \n " \
                 "1 USD (Доллар) = " + str(r['USD'].value) + " руб. \n " \
                  + "1 EUR (Евро) = " + str(r['EUR'].value) + " руб. \n " \
-                 + "1 GBP (Фунт стерлингов Соединенного Королевства = " + str(r['GBP'].value) + " руб. \n " \
+                 + "1 GBP (Фунт стерлингов Соединенного Королевства) = " + str(r['GBP'].value) + " руб. \n " \
                  + "1 CHF (Швейцарский франк) = " + str(r['CHF'].value) + " руб. \n " \
                  + "1 JPY (Японская иена) = " + str(r['JPY'].value) + " руб. \n " \
                  + "1 DKK (Датская крона) = " + str(r['DKK'].value) + " руб. \n "
+        bot.send_message(call.message.chat.id, answer)
+    except Exception as a:
+        bot.send_message(call.message.chat.id, a)
+
+def rates2(call):
+    dt = datetime.datetime.now().strftime("%Y-%m-%d")
+    r = ExchangeRates(dt, locale_en=True)
+    cm = bot.send_message(call.message.chat.id, "Введите код валюты в формате: ХХХ . Например USD или JPY.")
+    bot.register_next_step_handler(b,call)
+    try:
+        # print(r)
+        answer = "По состоянию на " + dt + ": \n " \
+                "1 USD (Доллар) = " + str(r[cm].value) + " руб. \n "
         bot.send_message(call.message.chat.id, answer)
     except Exception as a:
         bot.send_message(call.message.chat.id, a)
@@ -117,6 +130,7 @@ def welcome_func():
                                     callback_data="get_coffee_place"))
     markup.add(InlineKeyboardButton("Погода", callback_data="get_weather"),
                InlineKeyboardButton("Курс валют", callback_data="course_exchange"))
+    markup.add(InlineKeyboardButton("Курс по коду валюты", callback_data="course_exchange2"))
     markup.add(InlineKeyboardButton("Добавить день рождение", callback_data="course_exchange"))
     markup.add(InlineKeyboardButton("Дни рождения сегодня", callback_data="course_exchange"))
     markup.add(InlineKeyboardButton("Дни рождения в ближайший месяц", callback_data="course_exchange"))
@@ -133,6 +147,8 @@ def callback_query(call):
         get_coffee_place(call)
     elif call.data == "course_exchange":
         rates(call)
+    elif call.data == "course_exchange":
+        rates2(call)
     elif call.data == "programming_voc":
         programming_voc(call)
     elif call.data == "get_Rpo":
