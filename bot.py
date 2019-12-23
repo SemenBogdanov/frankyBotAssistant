@@ -184,7 +184,7 @@ def callback_query(call):
         get_coffee_place(call)
     elif call.data == "course_exchange":
         rates(call)
-    elif call.data == "course_exchange":
+    elif call.data == "course_exchange2":
         rates2(call)
     elif call.data == "programming_voc":
         programming_voc(call)
