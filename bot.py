@@ -39,23 +39,24 @@ def one(call):
     soup2 = BeautifulSoup(html, 'html.parser')
     text = soup2.find('div', {'class': 'content-body'}).text
     answer = ''
-    answer += "Главная новость: "
-    answer += soup.find('div', {"class": "main-header__top-topic-title"}).text
-    answer += 'https://m.lenta.ru' + soup.find('div', {"class": "main-header"}).find('a')['href'] + '\n'
+    answer += "Главная новость: " + '\n'
+    answer += soup.find('div', {"class": "main-header__top-topic-title"}).text + "\n"
+    answer += text
+    answer += 'https://m.lenta.ru' + soup.find('div', {"class": "main-header"}).find('a')['href'] + '\n\n'
     i = 0
     for news in soup.find_all('a', {"class": "card-mini"}):
         if i != 4:
             newshtml = news.find('div', {"class": "card-mini__title"})
             newshtmltime = news.find('time', {"class": "card-mini__date"})
-            answer += newshtml.text + ' (' + newshtmltime.text + ')'
+            answer += newshtml.text + ' (' + newshtmltime.text + ')\n'
             if 'http' not in news['href']:
-                g = 'https://m.lenta.ru' + news['href'] + '\n'
+                g = 'https://m.lenta.ru' + news['href'] + '\n\n'
             else:
-                g = news['href'] + '\n'
-
+                g = news['href'] + '\n\n'
             answer += g
             i += 1
-            bot.send_message(call.message.chat.id, answer)
+    print(answer)
+    bot.send_message(call.message.chat.id, answer)
 
 
 def rates(call):
@@ -161,7 +162,7 @@ def get_coffee_place(call):
 def welcome_func():
     markup = InlineKeyboardMarkup()
     markup.row_width = 3
-    markup.add(InlineKeyboardButton("Последние новости!",
+    markup.add(InlineKeyboardButton("Последние новости",
                                     callback_data="news"))
     markup.add(InlineKeyboardButton("Погода", callback_data="get_weather"),
                InlineKeyboardButton("Курс валют", callback_data="course_exchange"))
@@ -178,7 +179,7 @@ def callback_query(call):
     if call.data == "get_weather":
         getyandexweather(call)
         bot.answer_callback_query(call.id, "Выбрана погода")
-    elif call.data == "get_coffee_place":
+    elif call.data == "news":
         one(call)
     elif call.data == "get_coffee_place":
         get_coffee_place(call)
